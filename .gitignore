@@ -1,41 +1,99 @@
-# Compiled Lua sources
-luac.out
+local ContentProvider = game:GetService("ContentProvider")
+local frame = script.Parent.ImageLabel
+local frame2 = script.Parent.ImageLabel2
 
-# luarocks build files
-*.src.rock
-*.zip
-*.tar.gz
+local toLoad = workspace -- Replace workspace with what you need to load
+local assetsTable = toLoad:GetDescendants()
+local totalAssets = #assetsTable
+local assetsLoaded = 0
 
-# Object files
-*.o
-*.os
-*.ko
-*.obj
-*.elf
+local TweenService = game:GetService('TweenService')
+local Gui = script.Parent
+local Bar = Gui:WaitForChild("Background"):WaitForChild("BarBackground"):WaitForChild("Bar")
+local Text =  Gui:WaitForChild("Background"):WaitForChild("Text")
+local Text2 =  Gui:WaitForChild("Background"):WaitForChild("Text2")
+local Text_3 =  Gui:WaitForChild("Background"):WaitForChild("Text3")
+local RunningBar = Gui:WaitForChild("Background"):WaitForChild("TextLabel")
 
-# Precompiled Headers
-*.gch
-*.pch
+local BlurEffect = game.Lighting.Blur
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
+BlurEffect.Size = 56
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false) --All of the above
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+Gui.Enabled = true
+Text2.Text = "Loading."
+wait(1)
+Text2.Text = "Loading.."
+wait(1)
+Text2.Text = "Loading..."
+wait(1)
+Text2.Text = "Loading."
+wait(1)
+Text2.Text = "Loading.."
+wait(1)
+Text2.Text = "Loading..."
+wait(1)
+Text2.Text = "Preparing..."
+wait(1)
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+for i = 1, totalAssets do
+	pcall(function() -- You don't need pcall if you are not loading the whole game
+		ContentProvider:PreloadAsync({assetsTable[i]})
+		assetsLoaded = i
+		Bar.Size = UDim2.new(i/totalAssets, 0, 1, 0)
+		Text.Text = "Loading Game Assets: " .. assetsTable[i].Name .. " ( " .. i .. " / " .. totalAssets .. " )"
+		---- text 1/ i 
+		Text2.Text = "Loading Assets: (" .. i .. "/" .. totalAssets .. ")"
+	end)
+end
+BlurEffect.Size = 0 
+
+wait(1)
+Text2.Text = "L"
+wait(0.01)
+Text2.Text = "Lo"
+wait(0.01)
+Text2.Text = "Loa"
+wait(0.01)
+Text2.Text = "Load"
+wait(0.01)
+Text2.Text = "Loade"
+wait(0.01)
+Text2.Text = "Loaded"
+wait(0.01)
+Text2.Text = "Loaded "
+wait(0.01)
+Text2.Text = "Loaded A"
+wait(0.01)
+Text2.Text = "Loaded As"
+wait(0.01)
+Text2.Text = "Loaded Ass"
+wait(0.01)
+Text2.Text = "Loaded Asse"
+wait(0.01)
+Text2.Text = "Loaded Asset"
+wait(0.01)
+Text2.Text = "Loaded Assets"
+wait(0.01)
+Text2.Text = "Loaded Assets!"
+
+TweenService:Create(
+Bar,	
+	TweenInfo.new(0.5),
+	{BackgroundTransparency = 1}
+):Play()
+script.Parent.Background.BarBackground.Bar:TweenSizeAndPosition(UDim2.new(0,0,0,0), UDim2.new(0.493,0,0,0))
+
+
+wait(2)
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true) --All of the above
+script.Parent.Background.BarBackground.Visible = false
+Text.Visible = false
+Text2.Visible = false
+Text_3.Visible = false
+RunningBar.Visible = false
+Bar.Visible = false
+frame:TweenPosition(UDim2.new(2.007, 0,0, 0))
+frame2:TweenPosition(UDim2.new(-2.016, 0,0, 0))
+
 
